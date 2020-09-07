@@ -1,10 +1,13 @@
-package rtcm3
+package messages
 
 import (
 	"encoding/binary"
+	"time"
+
 	"github.com/bamiaux/iobit"
 	"github.com/go-restruct/restruct"
-	"time"
+
+	"github.com/misterjulian/go-rtcm/timestamp"
 )
 
 // L1-Only GLONASS RTK Observables
@@ -37,7 +40,7 @@ func (msg Message1009) Serialize() []byte {
 }
 
 func (msg Message1009) Time() time.Time {
-	return DF034(msg.Epoch, time.Now().UTC())
+	return timestamp.DF034(msg.Epoch, time.Now().UTC())
 }
 
 // Extended L1-Only GLONASS RTK Observables
@@ -72,7 +75,7 @@ func (msg Message1010) Serialize() []byte {
 }
 
 func (msg Message1010) Time() time.Time {
-	return DF034(msg.Epoch, time.Now().UTC())
+	return timestamp.DF034(msg.Epoch, time.Now().UTC())
 }
 
 // L1&L2 GLONASS RTK Observables
@@ -109,7 +112,7 @@ func (msg Message1011) Serialize() []byte {
 }
 
 func (msg Message1011) Time() time.Time {
-	return DF034(msg.Epoch, time.Now().UTC())
+	return timestamp.DF034(msg.Epoch, time.Now().UTC())
 }
 
 // Extended L1&L2 GLONASS RTK Observables
@@ -149,7 +152,7 @@ func (msg Message1012) Serialize() []byte {
 }
 
 func (msg Message1012) Time() time.Time {
-	return DF034(msg.Epoch, time.Now().UTC())
+	return timestamp.DF034(msg.Epoch, time.Now().UTC())
 }
 
 // GLONASS Ionospheric Correction Differences

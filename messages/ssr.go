@@ -1,9 +1,12 @@
-package rtcm3
+package messages
 
 import (
 	"encoding/binary"
-	"github.com/go-restruct/restruct"
 	"time"
+
+	"github.com/go-restruct/restruct"
+
+	"github.com/misterjulian/go-rtcm/timestamp"
 )
 
 // SSR GPS Orbit Correction
@@ -40,7 +43,7 @@ func (msg Message1057) Serialize() []byte {
 }
 
 func (msg Message1057) Time() time.Time {
-	return DF385(msg.Epoch)
+	return timestamp.DF385(msg.Epoch)
 }
 
 // SSR GPS Clock Correction
@@ -72,7 +75,7 @@ func (msg Message1058) Serialize() []byte {
 }
 
 func (msg Message1058) Time() time.Time {
-	return DF385(msg.Epoch)
+	return timestamp.DF385(msg.Epoch)
 }
 
 // SSR GPS Code Bias
@@ -106,7 +109,7 @@ func (msg Message1059) Serialize() []byte {
 }
 
 func (msg Message1059) Time() time.Time {
-	return DF385(msg.Epoch)
+	return timestamp.DF385(msg.Epoch)
 }
 
 // SSR GPS Combined Orbit and Clock Corrections
@@ -146,7 +149,7 @@ func (msg Message1060) Serialize() []byte {
 }
 
 func (msg Message1060) Time() time.Time {
-	return DF385(msg.Epoch)
+	return timestamp.DF385(msg.Epoch)
 }
 
 // SSR GPS URA
@@ -176,7 +179,7 @@ func (msg Message1061) Serialize() []byte {
 }
 
 func (msg Message1061) Time() time.Time {
-	return DF385(msg.Epoch)
+	return timestamp.DF385(msg.Epoch)
 }
 
 // SSR GPS High Rate Clock Correction
@@ -206,7 +209,7 @@ func (msg Message1062) Serialize() []byte {
 }
 
 func (msg Message1062) Time() time.Time {
-	return DF385(msg.Epoch)
+	return timestamp.DF385(msg.Epoch)
 }
 
 // SSR GLONASS Orbit Correction
@@ -243,7 +246,7 @@ func (msg Message1063) Serialize() []byte {
 }
 
 func (msg Message1063) Time() time.Time {
-	return DF386(msg.Epoch, time.Now())
+	return timestamp.DF386(msg.Epoch, time.Now())
 }
 
 // SSR GLONASS Clock Correction
@@ -275,7 +278,7 @@ func (msg Message1064) Serialize() []byte {
 }
 
 func (msg Message1064) Time() time.Time {
-	return DF386(msg.Epoch, time.Now())
+	return timestamp.DF386(msg.Epoch, time.Now())
 }
 
 // SSR GLONASS Code Bias
@@ -309,7 +312,7 @@ func (msg Message1065) Serialize() []byte {
 }
 
 func (msg Message1065) Time() time.Time {
-	return DF386(msg.Epoch, time.Now())
+	return timestamp.DF386(msg.Epoch, time.Now())
 }
 
 // SSR GLONASS Combined Orbit and Clock Corrections
@@ -349,7 +352,7 @@ func (msg Message1066) Serialize() []byte {
 }
 
 func (msg Message1066) Time() time.Time {
-	return DF386(msg.Epoch, time.Now())
+	return timestamp.DF386(msg.Epoch, time.Now())
 }
 
 // SSR GLONASS URA
@@ -379,7 +382,7 @@ func (msg Message1067) Serialize() []byte {
 }
 
 func (msg Message1067) Time() time.Time {
-	return DF386(msg.Epoch, time.Now())
+	return timestamp.DF386(msg.Epoch, time.Now())
 }
 
 // SSR GLONASS High Rate Clock Correction
@@ -409,5 +412,5 @@ func (msg Message1068) Serialize() []byte {
 }
 
 func (msg Message1068) Time() time.Time {
-	return DF386(msg.Epoch, time.Now())
+	return timestamp.DF386(msg.Epoch, time.Now())
 }

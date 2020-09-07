@@ -1,18 +1,18 @@
-package rtcm3
+package timestamp
 
 import (
 	"time"
 )
 
-// TODO: Calculate leapseconds
-var LEAPSECONDS time.Duration = 18 * time.Second
+// TODO: Calculate leap seconds
+const Leap = 18 * time.Second
 
 // GPS Epoch Time (TOW)
 func DF004(e uint32) time.Time {
 	now := time.Now().UTC()
 	sow := now.Truncate(time.Hour*24).AddDate(0, 0, -int(now.Weekday()))
 	tow := time.Duration(e) * time.Millisecond
-	return sow.Add(-(LEAPSECONDS)).Add(tow)
+	return sow.Add(-(Leap)).Add(tow)
 }
 
 // GPS Epoch Time 1s
@@ -20,7 +20,7 @@ func DF385(e uint32) time.Time {
 	now := time.Now().UTC()
 	sow := now.Truncate(time.Hour*24).AddDate(0, 0, -int(now.Weekday()))
 	tow := time.Duration(e) * time.Second
-	return sow.Add(-(LEAPSECONDS)).Add(tow)
+	return sow.Add(-(Leap)).Add(tow)
 }
 
 // GLONASS Epoch Time (tk)

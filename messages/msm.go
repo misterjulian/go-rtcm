@@ -1,10 +1,13 @@
-package rtcm3
+package messages
 
 import (
-	"github.com/bamiaux/iobit"
 	"math"
 	"math/bits"
 	"time"
+
+	"github.com/bamiaux/iobit"
+
+	"github.com/misterjulian/go-rtcm/timestamp"
 )
 
 // TODO: Can't parse using restruct until https://github.com/go-restruct/restruct/pull/32
@@ -640,7 +643,7 @@ func DeserializeMessage1071(data []byte) Message1071 {
 }
 
 func (msg Message1071) Time() time.Time {
-	return DF004(msg.MsmHeader.Epoch)
+	return timestamp.DF004(msg.MsmHeader.Epoch)
 }
 
 // GPS MSM2
@@ -655,7 +658,7 @@ func DeserializeMessage1072(data []byte) Message1072 {
 }
 
 func (msg Message1072) Time() time.Time {
-	return DF004(msg.MsmHeader.Epoch)
+	return timestamp.DF004(msg.MsmHeader.Epoch)
 }
 
 // GPS MSM3
@@ -670,7 +673,7 @@ func DeserializeMessage1073(data []byte) Message1073 {
 }
 
 func (msg Message1073) Time() time.Time {
-	return DF004(msg.MsmHeader.Epoch)
+	return timestamp.DF004(msg.MsmHeader.Epoch)
 }
 
 // GPS MSM4
@@ -685,7 +688,7 @@ func DeserializeMessage1074(data []byte) Message1074 {
 }
 
 func (msg Message1074) Time() time.Time {
-	return DF004(msg.MsmHeader.Epoch)
+	return timestamp.DF004(msg.MsmHeader.Epoch)
 }
 
 // GPS MSM5
@@ -700,7 +703,7 @@ func DeserializeMessage1075(data []byte) Message1075 {
 }
 
 func (msg Message1075) Time() time.Time {
-	return DF004(msg.MsmHeader.Epoch)
+	return timestamp.DF004(msg.MsmHeader.Epoch)
 }
 
 // GPS MSM6
@@ -715,7 +718,7 @@ func DeserializeMessage1076(data []byte) Message1076 {
 }
 
 func (msg Message1076) Time() time.Time {
-	return DF004(msg.MsmHeader.Epoch)
+	return timestamp.DF004(msg.MsmHeader.Epoch)
 }
 
 // GPS MSM7
@@ -730,7 +733,7 @@ func DeserializeMessage1077(data []byte) Message1077 {
 }
 
 func (msg Message1077) Time() time.Time {
-	return DF004(msg.MsmHeader.Epoch)
+	return timestamp.DF004(msg.MsmHeader.Epoch)
 }
 
 // GLONASS MSM1
@@ -745,7 +748,7 @@ func DeserializeMessage1081(data []byte) Message1081 {
 }
 
 func (msg Message1081) Time() time.Time {
-	return GlonassTimeMSM(msg.MsmHeader.Epoch)
+	return timestamp.GlonassTimeMSM(msg.MsmHeader.Epoch)
 }
 
 // GLONASS MSM2
@@ -760,7 +763,7 @@ func DeserializeMessage1082(data []byte) Message1082 {
 }
 
 func (msg Message1082) Time() time.Time {
-	return GlonassTimeMSM(msg.MsmHeader.Epoch)
+	return timestamp.GlonassTimeMSM(msg.MsmHeader.Epoch)
 }
 
 // GLONASS MSM3
@@ -775,7 +778,7 @@ func DeserializeMessage1083(data []byte) Message1083 {
 }
 
 func (msg Message1083) Time() time.Time {
-	return GlonassTimeMSM(msg.MsmHeader.Epoch)
+	return timestamp.GlonassTimeMSM(msg.MsmHeader.Epoch)
 }
 
 // GLONASS MSM4
@@ -790,7 +793,7 @@ func DeserializeMessage1084(data []byte) Message1084 {
 }
 
 func (msg Message1084) Time() time.Time {
-	return GlonassTimeMSM(msg.MsmHeader.Epoch)
+	return timestamp.GlonassTimeMSM(msg.MsmHeader.Epoch)
 }
 
 // GLONASS MSM5
@@ -805,7 +808,7 @@ func DeserializeMessage1085(data []byte) Message1085 {
 }
 
 func (msg Message1085) Time() time.Time {
-	return GlonassTimeMSM(msg.MsmHeader.Epoch)
+	return timestamp.GlonassTimeMSM(msg.MsmHeader.Epoch)
 }
 
 // GLONASS MSM6
@@ -820,7 +823,7 @@ func DeserializeMessage1086(data []byte) Message1086 {
 }
 
 func (msg Message1086) Time() time.Time {
-	return GlonassTimeMSM(msg.MsmHeader.Epoch)
+	return timestamp.GlonassTimeMSM(msg.MsmHeader.Epoch)
 }
 
 // GLONASS MSM7
@@ -835,7 +838,7 @@ func DeserializeMessage1087(data []byte) Message1087 {
 }
 
 func (msg Message1087) Time() time.Time {
-	return GlonassTimeMSM(msg.MsmHeader.Epoch)
+	return timestamp.GlonassTimeMSM(msg.MsmHeader.Epoch)
 }
 
 // Galileo MSM1
@@ -850,7 +853,7 @@ func DeserializeMessage1091(data []byte) Message1091 {
 }
 
 func (msg Message1091) Time() time.Time {
-	return DF004(msg.MsmHeader.Epoch)
+	return timestamp.DF004(msg.MsmHeader.Epoch)
 }
 
 // Galileo MSM2
@@ -865,7 +868,7 @@ func DeserializeMessage1092(data []byte) Message1092 {
 }
 
 func (msg Message1092) Time() time.Time {
-	return DF004(msg.MsmHeader.Epoch)
+	return timestamp.DF004(msg.MsmHeader.Epoch)
 }
 
 // Galileo MSM3
@@ -880,7 +883,7 @@ func DeserializeMessage1093(data []byte) Message1093 {
 }
 
 func (msg Message1093) Time() time.Time {
-	return DF004(msg.MsmHeader.Epoch)
+	return timestamp.DF004(msg.MsmHeader.Epoch)
 }
 
 // Galileo MSM4
@@ -895,7 +898,7 @@ func DeserializeMessage1094(data []byte) Message1094 {
 }
 
 func (msg Message1094) Time() time.Time {
-	return DF004(msg.MsmHeader.Epoch)
+	return timestamp.DF004(msg.MsmHeader.Epoch)
 }
 
 // Galileo MSM5
@@ -910,7 +913,7 @@ func DeserializeMessage1095(data []byte) Message1095 {
 }
 
 func (msg Message1095) Time() time.Time {
-	return DF004(msg.MsmHeader.Epoch)
+	return timestamp.DF004(msg.MsmHeader.Epoch)
 }
 
 // Galileo MSM6
@@ -925,7 +928,7 @@ func DeserializeMessage1096(data []byte) Message1096 {
 }
 
 func (msg Message1096) Time() time.Time {
-	return DF004(msg.MsmHeader.Epoch)
+	return timestamp.DF004(msg.MsmHeader.Epoch)
 }
 
 // Galileo MSM7
@@ -940,7 +943,7 @@ func DeserializeMessage1097(data []byte) Message1097 {
 }
 
 func (msg Message1097) Time() time.Time {
-	return DF004(msg.MsmHeader.Epoch)
+	return timestamp.DF004(msg.MsmHeader.Epoch)
 }
 
 // SBAS MSM1
@@ -955,7 +958,7 @@ func DeserializeMessage1101(data []byte) Message1101 {
 }
 
 func (msg Message1101) Time() time.Time {
-	return DF004(msg.MsmHeader.Epoch)
+	return timestamp.DF004(msg.MsmHeader.Epoch)
 }
 
 // SBAS MSM2
@@ -970,7 +973,7 @@ func DeserializeMessage1102(data []byte) Message1102 {
 }
 
 func (msg Message1102) Time() time.Time {
-	return DF004(msg.MsmHeader.Epoch)
+	return timestamp.DF004(msg.MsmHeader.Epoch)
 }
 
 // SBAS MSM3
@@ -985,7 +988,7 @@ func DeserializeMessage1103(data []byte) Message1103 {
 }
 
 func (msg Message1103) Time() time.Time {
-	return DF004(msg.MsmHeader.Epoch)
+	return timestamp.DF004(msg.MsmHeader.Epoch)
 }
 
 // SBAS MSM4
@@ -1000,7 +1003,7 @@ func DeserializeMessage1104(data []byte) Message1104 {
 }
 
 func (msg Message1104) Time() time.Time {
-	return DF004(msg.MsmHeader.Epoch)
+	return timestamp.DF004(msg.MsmHeader.Epoch)
 }
 
 // SBAS MSM5
@@ -1015,7 +1018,7 @@ func DeserializeMessage1105(data []byte) Message1105 {
 }
 
 func (msg Message1105) Time() time.Time {
-	return DF004(msg.MsmHeader.Epoch)
+	return timestamp.DF004(msg.MsmHeader.Epoch)
 }
 
 // SBAS MSM6
@@ -1030,7 +1033,7 @@ func DeserializeMessage1106(data []byte) Message1106 {
 }
 
 func (msg Message1106) Time() time.Time {
-	return DF004(msg.MsmHeader.Epoch)
+	return timestamp.DF004(msg.MsmHeader.Epoch)
 }
 
 // SBAS MSM7
@@ -1045,7 +1048,7 @@ func DeserializeMessage1107(data []byte) Message1107 {
 }
 
 func (msg Message1107) Time() time.Time {
-	return DF004(msg.MsmHeader.Epoch)
+	return timestamp.DF004(msg.MsmHeader.Epoch)
 }
 
 // QZSS MSM1
@@ -1060,7 +1063,7 @@ func DeserializeMessage1111(data []byte) Message1111 {
 }
 
 func (msg Message1111) Time() time.Time {
-	return DF004(msg.MsmHeader.Epoch)
+	return timestamp.DF004(msg.MsmHeader.Epoch)
 }
 
 // QZSS MSM2
@@ -1075,7 +1078,7 @@ func DeserializeMessage1112(data []byte) Message1112 {
 }
 
 func (msg Message1112) Time() time.Time {
-	return DF004(msg.MsmHeader.Epoch)
+	return timestamp.DF004(msg.MsmHeader.Epoch)
 }
 
 // QZSS MSM3
@@ -1090,7 +1093,7 @@ func DeserializeMessage1113(data []byte) Message1113 {
 }
 
 func (msg Message1113) Time() time.Time {
-	return DF004(msg.MsmHeader.Epoch)
+	return timestamp.DF004(msg.MsmHeader.Epoch)
 }
 
 // QZSS MSM4
@@ -1105,7 +1108,7 @@ func DeserializeMessage1114(data []byte) Message1114 {
 }
 
 func (msg Message1114) Time() time.Time {
-	return DF004(msg.MsmHeader.Epoch)
+	return timestamp.DF004(msg.MsmHeader.Epoch)
 }
 
 // QZSS MSM5
@@ -1120,7 +1123,7 @@ func DeserializeMessage1115(data []byte) Message1115 {
 }
 
 func (msg Message1115) Time() time.Time {
-	return DF004(msg.MsmHeader.Epoch)
+	return timestamp.DF004(msg.MsmHeader.Epoch)
 }
 
 // QZSS MSM6
@@ -1135,7 +1138,7 @@ func DeserializeMessage1116(data []byte) Message1116 {
 }
 
 func (msg Message1116) Time() time.Time {
-	return DF004(msg.MsmHeader.Epoch)
+	return timestamp.DF004(msg.MsmHeader.Epoch)
 }
 
 // QZSS MSM7
@@ -1150,7 +1153,7 @@ func DeserializeMessage1117(data []byte) Message1117 {
 }
 
 func (msg Message1117) Time() time.Time {
-	return DF004(msg.MsmHeader.Epoch)
+	return timestamp.DF004(msg.MsmHeader.Epoch)
 }
 
 // BeiDou MSM1
@@ -1165,7 +1168,7 @@ func DeserializeMessage1121(data []byte) Message1121 {
 }
 
 func (msg Message1121) Time() time.Time {
-	return DF004(msg.MsmHeader.Epoch).Add(14 * time.Second)
+	return timestamp.DF004(msg.MsmHeader.Epoch).Add(14 * time.Second)
 }
 
 // BeiDou MSM2
@@ -1180,7 +1183,7 @@ func DeserializeMessage1122(data []byte) Message1122 {
 }
 
 func (msg Message1122) Time() time.Time {
-	return DF004(msg.MsmHeader.Epoch).Add(14 * time.Second)
+	return timestamp.DF004(msg.MsmHeader.Epoch).Add(14 * time.Second)
 }
 
 // BeiDou MSM3
@@ -1195,7 +1198,7 @@ func DeserializeMessage1123(data []byte) Message1123 {
 }
 
 func (msg Message1123) Time() time.Time {
-	return DF004(msg.MsmHeader.Epoch).Add(14 * time.Second)
+	return timestamp.DF004(msg.MsmHeader.Epoch).Add(14 * time.Second)
 }
 
 // BeiDou MSM4
@@ -1210,7 +1213,7 @@ func DeserializeMessage1124(data []byte) Message1124 {
 }
 
 func (msg Message1124) Time() time.Time {
-	return DF004(msg.MsmHeader.Epoch).Add(14 * time.Second)
+	return timestamp.DF004(msg.MsmHeader.Epoch).Add(14 * time.Second)
 }
 
 // BeiDou MSM5
@@ -1225,7 +1228,7 @@ func DeserializeMessage1125(data []byte) Message1125 {
 }
 
 func (msg Message1125) Time() time.Time {
-	return DF004(msg.MsmHeader.Epoch).Add(14 * time.Second)
+	return timestamp.DF004(msg.MsmHeader.Epoch).Add(14 * time.Second)
 }
 
 // BeiDou MSM6
@@ -1240,7 +1243,7 @@ func DeserializeMessage1126(data []byte) Message1126 {
 }
 
 func (msg Message1126) Time() time.Time {
-	return DF004(msg.MsmHeader.Epoch).Add(14 * time.Second)
+	return timestamp.DF004(msg.MsmHeader.Epoch).Add(14 * time.Second)
 }
 
 // BeiDou MSM7
@@ -1255,5 +1258,5 @@ func DeserializeMessage1127(data []byte) Message1127 {
 }
 
 func (msg Message1127) Time() time.Time {
-	return DF004(msg.MsmHeader.Epoch).Add(14 * time.Second)
+	return timestamp.DF004(msg.MsmHeader.Epoch).Add(14 * time.Second)
 }

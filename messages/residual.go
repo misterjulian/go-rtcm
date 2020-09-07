@@ -1,7 +1,8 @@
-package rtcm3
+package messages
 
 import (
 	"encoding/binary"
+
 	"github.com/go-restruct/restruct"
 )
 

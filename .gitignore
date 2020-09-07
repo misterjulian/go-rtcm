@@ -1,0 +1,2 @@
+# Ignore go modules sum file
+go.sum

@@ -1,30 +1,43 @@
-package rtcm3
+package messages
 
 import (
-	"bufio"
 	"encoding/binary"
-	"errors"
-	"github.com/bamiaux/iobit"
-	"io"
 	"time"
 )
 
-type Message interface {
-	Serialize() []byte
-	Number() int
+type (
+	Message interface {
+		Serialize() []byte
+		Number() int
+	}
+
+	Observable interface {
+		Message
+		Time() time.Time
+	}
+
+	AbstractMessage struct {
+		MessageNumber uint16 `struct:"uint16:12"`
+	}
+
+	MessageUnknown struct {
+		Payload []byte
+	}
+)
+
+func (am AbstractMessage) Number() int {
+	return int(am.MessageNumber)
 }
 
-type Observable interface {
-	Message
-	Time() time.Time
+func (mu MessageUnknown) Serialize() []byte {
+	return mu.Payload
 }
 
-type AbstractMessage struct {
-	MessageNumber uint16 `struct:"uint16:12"`
-}
-
-func (msg AbstractMessage) Number() int {
-	return int(msg.MessageNumber)
+func (mu MessageUnknown) Number() (msgNumber int) {
+	if len(mu.Payload) >= 4 {
+		msgNumber = int(binary.BigEndian.Uint16(mu.Payload[0:4]) >> 4)
+	}
+	return msgNumber
 }
 
 func DeserializeMessage(payload []byte) (msg Message) {
@@ -212,137 +225,5 @@ func DeserializeMessage(payload []byte) (msg Message) {
 		return DeserializeMessage1230(payload)
 	default:
 		return MessageUnknown{payload}
-	}
-}
-
-type MessageUnknown struct {
-	Payload []byte
-}
-
-func (msg MessageUnknown) Serialize() []byte {
-	return msg.Payload
-}
-
-func (msg MessageUnknown) Number() (msgNumber int) {
-	if len(msg.Payload) >= 4 {
-		msgNumber = int(binary.BigEndian.Uint16(msg.Payload[0:4]) >> 4)
-	}
-	return msgNumber
-}
-
-var FramePreamble byte = 0xD3
-
-type Frame struct {
-	Preamble uint8
-	Reserved uint8
-	Length   uint16
-	Payload  []byte
-	Crc      uint32
-}
-
-// EncapsulateByteArray lazily wraps any byte array in an RTCM3 Frame
-func EncapsulateByteArray(data []byte) (frame Frame) {
-	frame = Frame{
-		Preamble: FramePreamble,
-		Reserved: 0,
-		Length:   uint16(len(data)),
-		Payload:  data,
-		Crc:      uint32(0),
-	}
-	frame.Crc = Crc24q(frame.Serialize()[:len(data)+3])
-	return frame
-}
-
-func EncapsulateMessage(msg Message) (frame Frame) {
-	return EncapsulateByteArray(msg.Serialize())
-}
-
-func (frame Frame) MessageNumber() uint16 {
-	return binary.BigEndian.Uint16(frame.Payload[0:2]) >> 4
-}
-
-func (frame Frame) Serialize() []byte {
-	data := make([]byte, frame.Length+6)
-	w := iobit.NewWriter(data)
-	w.PutUint8(8, frame.Preamble)
-	w.PutUint8(6, frame.Reserved)
-	w.PutUint16(10, frame.Length)
-	w.Write(frame.Payload)
-	w.PutUint32(24, frame.Crc)
-	w.Flush()
-	return data
-}
-
-func DeserializeFrame(reader *bufio.Reader) (frame Frame, err error) {
-	// Only reads first byte from reader if Preamble or CRC are incorrect
-	// Unfortunatly can't construct anything that will read bits (like iobit) until we have a byte array
-	preamble, err := reader.ReadByte()
-	if err != nil {
-		return frame, err
-	}
-	if preamble != FramePreamble {
-		return frame, errors.New("Invalid Preamble")
-	}
-
-	header, err := reader.Peek(2)
-	if err != nil {
-		return frame, err
-	}
-
-	reserved := uint8(header[0]) & 0xFC
-	length := binary.BigEndian.Uint16(header) & 0x3FF
-	data, err := reader.Peek(int(length + 5))
-	if err != nil {
-		return frame, err
-	}
-
-	data = append([]byte{preamble}, data...)
-	crc := binary.BigEndian.Uint32(data[len(data)-4:]) & 0xFFFFFF
-
-	frame = Frame{
-		Preamble: preamble,
-		Reserved: reserved,
-		Length:   length,
-		Payload:  data[3 : len(data)-3],
-		Crc:      crc,
-	}
-
-	if Crc24q(data[:len(data)-3]) != frame.Crc {
-		return frame, errors.New("CRC Failed")
-	}
-
-	reader.Discard(len(data) - 1)
-	return frame, nil
-}
-
-type Scanner struct {
-	Reader *bufio.Reader
-}
-
-// NewScanner returns a Scanner for the given io.Reader
-func NewScanner(r io.Reader) Scanner {
-	return Scanner{bufio.NewReader(r)}
-}
-
-// Next reads from IO until a Message is found
-func (scanner Scanner) Next() (message Message, err error) {
-	frame, err := scanner.NextFrame()
-	if err != nil {
-		return nil, err
-	}
-	return DeserializeMessage(frame.Payload), err // probably have DeserializeMessage return err
-}
-
-func (scanner Scanner) NextFrame() (frame Frame, err error) {
-	for {
-		frame, err := DeserializeFrame(scanner.Reader)
-		if err != nil {
-			if err.Error() == "Invalid Preamble" || err.Error() == "CRC Failed" {
-				// Continue reading from next byte if a valid Frame was not found
-				//TODO: return byte array of skipped bytes
-				continue
-			}
-		}
-		return frame, err
 	}
 }

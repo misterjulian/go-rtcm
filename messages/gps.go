@@ -1,9 +1,12 @@
-package rtcm3
+package messages
 
 import (
 	"encoding/binary"
-	"github.com/go-restruct/restruct"
 	"time"
+
+	"github.com/go-restruct/restruct"
+
+	"github.com/misterjulian/go-rtcm/timestamp"
 )
 
 // L1-Only GPS RTK Observables
@@ -35,7 +38,7 @@ func (msg Message1001) Serialize() []byte {
 }
 
 func (msg Message1001) Time() time.Time {
-	return DF004(msg.Epoch)
+	return timestamp.DF004(msg.Epoch)
 }
 
 // Extended L1-Only GPS RTK Observables
@@ -69,7 +72,7 @@ func (msg Message1002) Serialize() []byte {
 }
 
 func (msg Message1002) Time() time.Time {
-	return DF004(msg.Epoch)
+	return timestamp.DF004(msg.Epoch)
 }
 
 // L1&L2 GPS RTK Observables
@@ -105,7 +108,7 @@ func (msg Message1003) Serialize() []byte {
 }
 
 func (msg Message1003) Time() time.Time {
-	return DF004(msg.Epoch)
+	return timestamp.DF004(msg.Epoch)
 }
 
 // Extended L1&L2 GPS RTK Observables
@@ -144,7 +147,7 @@ func (msg Message1004) Serialize() []byte {
 }
 
 func (msg Message1004) Time() time.Time {
-	return DF004(msg.Epoch)
+	return timestamp.DF004(msg.Epoch)
 }
 
 // Network Auxiliary Station Data Message
