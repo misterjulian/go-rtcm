@@ -10,9 +10,9 @@ import rtcm "github.com/misterjulian/go-rtcm"
 conn, err := d.DialContext(ctx, "tcp", "some address here")
 ...
 
-source = rtcm.New(conn)
+scanner = rtcm.NewScanner(conn)
 for {
-    frame, err := source.NextFrame() 
+    frame, err := scanner.ScanFrame() 
     ...
     Your logic here
     ...
